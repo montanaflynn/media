@@ -2,7 +2,7 @@
 
 [![][travis-svg]][travis-url] [![][coveralls-svg]][coveralls-url] [![][goreport-svg]][goreport-url] [![][godoc-svg]][godoc-url] [![][pkggodev-svg]][pkggodev-url] [![][license-svg]][license-url]
 
-A library for determining information about media without decoding the entire file.
+A Golang package for determining information about media without decoding the entire file.
 
 Currently it supports finding the size of `png` and `gif` media by only reading up to 28 bytes.
 
