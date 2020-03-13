@@ -2,12 +2,14 @@
 
 [![][travis-svg]][travis-url] [![][coveralls-svg]][coveralls-url] [![][goreport-svg]][goreport-url] [![][godoc-svg]][godoc-url] [![][pkggodev-svg]][pkggodev-url] [![][license-svg]][license-url]
 
-A library for determining information about media without decoding the entire file. Currently it supports finding the dimensions of `png` and `gif` media by only reading up to 28 bytes.
+A library for determining information about media without decoding the entire file.
+
+Currently it supports finding the size of `png` and `gif` media by only reading up to 28 bytes.
 
 **Note:** The API is in active development and may change.
 
 - [Install](#install)
-- [Usage](#usage)
+- [Example Usage](#Example-Usage)
 - [Documentation](#documentation)
   - [Errors](#errors)
   - [type ImageType](#ImageType)
@@ -23,7 +25,7 @@ go get github.com/montanaflynn/media/size
 
 ## Example Usage
 
-From [cmd/image-size-http](cmd/image-size-http):
+From [cmd/image-size-http](cmd/image-size-http/main.go):
 
 ```go
 giphy := "https://media1.giphy.com/media/l0ErxFClZX9L3bgBi/giphy.gif"
