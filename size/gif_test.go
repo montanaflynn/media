@@ -1,4 +1,4 @@
-package mediasize
+package size
 
 import (
 	"os"

@@ -16,7 +16,7 @@ func main() {
 		log.Fatal(err)
 	}
 	defer res.Body.Close()
-	size, err := mediasize.Parse(res.Body)
+	size, err := size.Parse(res.Body)
 	if err != nil {
 		log.Fatal(err)
 	}
