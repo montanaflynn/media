@@ -118,9 +118,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 [coveralls-svg]: https://img.shields.io/coveralls/montanaflynn/media.svg
 [goreport-url]: https://goreportcard.com/report/github.com/montanaflynn/media
 [goreport-svg]: https://goreportcard.com/badge/github.com/montanaflynn/media
-[godoc-url]: https://godoc.org/github.com/montanaflynn/media
-[godoc-svg]: https://godoc.org/github.com/montanaflynn/media?status.svg
-[pkggodev-url]: https://pkg.go.dev/github.com/montanaflynn/media
+[godoc-url]: https://godoc.org/github.com/montanaflynn/media/size
+[godoc-svg]: https://godoc.org/github.com/montanaflynn/media/size?status.svg
+[pkggodev-url]: https://pkg.go.dev/github.com/montanaflynn/media/size
 [pkggodev-svg]: https://gistcdn.githack.com/montanaflynn/b02f1d78d8c0de8435895d7e7cd0d473/raw/17f2a5a69f1323ecd42c00e0683655da96d9ecc8/badge.svg
 [license-url]: https://github.com/montanaflynn/media/blob/master/LICENSE
 [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
