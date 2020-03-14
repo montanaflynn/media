@@ -64,7 +64,7 @@ var (
 )
 ```
 
-### <a name="MediaType">type</a> [MediaType](/parse.go?s=468:489#L21)
+### <a name="MediaType">type</a> [MediaType](/size/parse.go?s=468:489#L21)
 
 ```go
 type MediaType string
@@ -88,7 +88,7 @@ const (
 )
 ```
 
-### <a name="Size">type</a> [Size](/parse.go?s=612:683#L32)
+### <a name="Size">type</a> [Size](/size/parse.go?s=612:683#L32)
 
 ```go
 type Size struct {
@@ -101,14 +101,14 @@ type Size struct {
 
 Size holds the media dimensions
 
-### <a name="Parse">func</a> [Parse](/parse.go?s=759:796#L39)
+### <a name="Parse">func</a> [Parse](/size//parse.go?s=759:796#L39)
 
 ```go
 // Parse returns the media information including file type and dimensions
 func Parse(r io.Reader) (Size, error)
 ```
 
-### <a name="DetectMediaType">func</a> [DetectMediaType](/detect.go?s=695:755#L35)
+### <a name="DetectMediaType">func</a> [DetectMediaType](/size/detect.go?s=695:755#L35)
 
 ```go
 // DetectMediaType returns the MediaType from the first 32 bytes
