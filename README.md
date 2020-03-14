@@ -53,14 +53,17 @@ fmt.Printf("%s", jsonBytes)
 
 ```go
 var (
-    // ErrMissingGIFHeaders is when a gif is missing the headers
-    ErrMissingGIFHeaders = fmt.Errorf("Invalid gif missing headers")
+	// ErrUnknownMediaType is when media is an unknown type
+	ErrUnknownMediaType = fmt.Errorf("Unknown media type")
 
-    // ErrUnknownMediaType is when an media is an unknown type
-    ErrUnknownMediaType = fmt.Errorf("Unknown media type")
+	// ErrUnsupportedSize is when media type doesn't implement size
+	ErrUnsupportedSize = fmt.Errorf("Unsupported size")
 
-    // ErrPNGMissingIHDR is when a png is missing the HDR header
-    ErrPNGMissingIHDR = fmt.Errorf("Invalid png missing IHDR")
+	// ErrPNGMissingIHDR is when a png is missing the HDR header
+	ErrPNGMissingIHDR = fmt.Errorf("Invalid png missing IHDR")
+
+	// ErrBMPInvalidHeaderLength is when a bmp has invalid header length
+	ErrBMPInvalidHeaderLength = fmt.Errorf("Invalid bmp header length")
 )
 ```
 
