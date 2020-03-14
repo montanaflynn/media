@@ -14,6 +14,9 @@ var (
 
 	// ErrPNGMissingIHDR is when a png is missing the HDR header
 	ErrPNGMissingIHDR = fmt.Errorf("Invalid png missing IHDR")
+
+	// ErrBMPInvalidHeaderLength is when a bmp has invalid header length
+	ErrBMPInvalidHeaderLength = fmt.Errorf("Invalid bmp header length")
 )
 
 // MediaType is the type of the media
@@ -52,6 +55,8 @@ func Parse(r io.Reader) (Size, error) {
 		return gifDimensions(readBytes)
 	case PNG:
 		return pngDimensions(readBytes)
+	case BMP:
+		return bmpDimensions(readBytes)
 	}
 
 	return Size{MediaType: mediaType}, ErrUnsupportedSize
