@@ -4,7 +4,7 @@
 
 A Golang package for determining information about media without decoding the entire file.
 
-Currently it supports finding the dimensions of `png` and `gif` media by only reading 32 bytes.
+Currently it supports finding the dimensions of `png`, `gif` and `bmp` media by only reading 32 bytes.
 
 **Note:** The API is in active development and may change.
 
