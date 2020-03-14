@@ -108,7 +108,7 @@ Size holds the media dimensions
 func Parse(r io.Reader) (Size, error)
 ```
 
-### <a name="DetectMediaType">func</a> [Parse](/detect.go?s=759:796#L35)
+### <a name="DetectMediaType">func</a> [DetectMediaType](/detect.go?s=695:755#L35)
 
 ```go
 // DetectMediaType returns the MediaType from the first 32 bytes
