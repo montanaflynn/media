@@ -11,14 +11,13 @@ func TestPNG(t *testing.T) {
 		filePath  string
 		height    int
 		width     int
-		imageType ImageType
+		mediaType MediaType
 		err       error
 	}{
 		{"valid png", "./test-images/test.png", 876, 1446, PNG, nil},
 		{"invalid gif", "./test-images/test-fail-10-bytes.png", 372, 480, PNG, ErrPNGMissingIHDR},
 	}
 	for _, tt := range tests {
-		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			png, err := os.Open(tt.filePath)
 			if err != nil {
@@ -32,8 +31,8 @@ func TestPNG(t *testing.T) {
 				}
 				return
 			}
-			if info.ImageType != tt.imageType {
-				t.Errorf("ImageType got %q, want %q", info.ImageType, tt.imageType)
+			if info.MediaType != tt.mediaType {
+				t.Errorf("MediaType got %q, want %q", info.MediaType, tt.mediaType)
 			}
 			if info.Width != tt.width {
 				t.Errorf("Width got %d, want %d", info.Width, tt.width)

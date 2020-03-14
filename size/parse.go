@@ -1,79 +1,58 @@
 package size
 
 import (
-	"bytes"
 	"fmt"
 	"io"
 )
 
 var (
-	// ErrMissingGIFHeaders is when a gif is missing the headers
-	ErrMissingGIFHeaders = fmt.Errorf("Invalid gif missing headers")
+	// ErrUnknownMediaType is when media is an unknown type
+	ErrUnknownMediaType = fmt.Errorf("Unknown media type")
 
-	// ErrUnknownImageType is when an image is an unknown type
-	ErrUnknownImageType = fmt.Errorf("Unknown image type")
+	// ErrUnsupportedSize is when media type doesn't implement size
+	ErrUnsupportedSize = fmt.Errorf("Unsupported size")
 
 	// ErrPNGMissingIHDR is when a png is missing the HDR header
 	ErrPNGMissingIHDR = fmt.Errorf("Invalid png missing IHDR")
 )
 
-// ImageType is the type of the image
-type ImageType string
+// MediaType is the type of the media
+type MediaType string
 
 const (
-	// PNG image type
-	PNG ImageType = "PNG"
+	// PNG media type
+	PNG MediaType = "PNG"
 
-	// GIF image type
+	// GIF media type
 	GIF = "GIF"
+
+	// BMP media type
+	BMP = "BMP"
+
+	// JPEG media type
+	JPEG = "JPEG"
 )
 
-// Size holds the image dimensions
+// Size holds the media dimensions
 type Size struct {
 	Width     int
 	Height    int
-	ImageType ImageType
+	MediaType MediaType
 }
 
-// Parse returns the image information including file type and dimensions
+// Parse returns the media information including file type and dimensions
 func Parse(r io.Reader) (Size, error) {
-
-	initialBytes := make([]byte, 3)
-	_, err := r.Read(initialBytes)
+	mediaType, readBytes, err := DetectMediaType(r)
 	if err != nil {
 		return Size{}, err
 	}
 
-	if string(initialBytes[:3]) == "GIF" {
-		moreBytes := make([]byte, 7)
-		nBytes, err := r.Read(moreBytes)
-		if err != nil {
-			return Size{}, err
-		}
-
-		if nBytes != 7 {
-			return Size{}, ErrMissingGIFHeaders
-		}
-		gifHeaderBytes := append(initialBytes, moreBytes...)
-		return gifDimensions(gifHeaderBytes)
+	switch mediaType {
+	case GIF:
+		return gifDimensions(readBytes)
+	case PNG:
+		return pngDimensions(readBytes)
 	}
 
-	moreBytes := make([]byte, 25)
-	_, err = r.Read(moreBytes)
-	if err != nil {
-		return Size{}, err
-	}
-	pngHeaderBytes := append(initialBytes, moreBytes...)
-	pngSignature := []byte{137, 80, 78, 71, 13, 10, 26, 10}
-	res := bytes.Compare(pngHeaderBytes[:8], pngSignature)
-	if res != 0 {
-		return Size{}, ErrUnknownImageType
-	}
-
-	IHDR := "IHDR"
-	if string(pngHeaderBytes[12:16]) != IHDR {
-		return Size{}, ErrPNGMissingIHDR
-	}
-
-	return pngDimensions(pngHeaderBytes)
+	return Size{MediaType: mediaType}, ErrUnsupportedSize
 }

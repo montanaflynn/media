@@ -4,7 +4,7 @@
 
 A Golang package for determining information about media without decoding the entire file.
 
-Currently it supports finding the size of `png` and `gif` media by only reading up to 28 bytes.
+Currently it supports finding the dimensions of `png` and `gif` media by only reading 32 bytes.
 
 **Note:** The API is in active development and may change.
 
@@ -12,9 +12,10 @@ Currently it supports finding the size of `png` and `gif` media by only reading 
 - [Example Usage](#Example-Usage)
 - [Documentation](#documentation)
   - [Errors](#errors)
-  - [type ImageType](#ImageType)
+  - [type MediaType](#MediaType)
   - [type Size](#Size)
   - [func Parse(r io.Reader) (Size, error)](#Parse)
+  - [func DetectMediaType(r io.Reader) (MediaType, []byte, error)](#DetectMediaType)
 - [MIT License](#Mit-License)
 
 ## Install
@@ -25,7 +26,7 @@ go get github.com/montanaflynn/media/size
 
 ## Example Usage
 
-From [cmd/image-size-http](cmd/image-size-http/main.go):
+From [cmd/media-size-http](cmd/media-size-http/main.go):
 
 ```go
 giphy := "https://media1.giphy.com/media/l0ErxFClZX9L3bgBi/giphy.gif"
@@ -43,7 +44,7 @@ if err != nil {
     log.Fatal(err)
 }
 fmt.Printf("%s", jsonBytes)
-// {"Width":480,"Height":270,"ImageType":"GIF"}
+// {"Width":480,"Height":270,"MediaType":"GIF"}
 ```
 
 ## Documentation
@@ -55,29 +56,35 @@ var (
     // ErrMissingGIFHeaders is when a gif is missing the headers
     ErrMissingGIFHeaders = fmt.Errorf("Invalid gif missing headers")
 
-    // ErrUnknownImageType is when an image is an unknown type
-    ErrUnknownImageType = fmt.Errorf("Unknown image type")
+    // ErrUnknownMediaType is when an media is an unknown type
+    ErrUnknownMediaType = fmt.Errorf("Unknown media type")
 
     // ErrPNGMissingIHDR is when a png is missing the HDR header
     ErrPNGMissingIHDR = fmt.Errorf("Invalid png missing IHDR")
 )
 ```
 
-### <a name="ImageType">type</a> [ImageType](/parse.go?s=468:489#L21)
+### <a name="MediaType">type</a> [MediaType](/parse.go?s=468:489#L21)
 
 ```go
-type ImageType string
+type MediaType string
 ```
 
-ImageType is the type of the image
+MediaType is the type of the media
 
 ```go
 const (
-    // PNG image type
-    PNG ImageType = "PNG"
+	// PNG media type
+	PNG MediaType = "PNG"
 
-    // GIF image type
-    GIF = "GIF"
+	// GIF media type
+	GIF = "GIF"
+
+	// BMP media type
+	BMP = "BMP"
+
+	// JPEG media type
+	JPEG = "JPEG"
 )
 ```
 
@@ -87,20 +94,26 @@ const (
 type Size struct {
     Width     int
     Height    int
-    ImageType ImageType
+    MediaType MediaType
 }
 
 ```
 
-Size holds the image dimensions
+Size holds the media dimensions
 
 ### <a name="Parse">func</a> [Parse](/parse.go?s=759:796#L39)
 
 ```go
+// Parse returns the media information including file type and dimensions
 func Parse(r io.Reader) (Size, error)
 ```
 
-Parse returns the image information including file type and dimensions
+### <a name="DetectMediaType">func</a> [Parse](/detect.go?s=759:796#L35)
+
+```go
+// DetectMediaType returns the MediaType from the first 32 bytes
+func DetectMediaType(r io.Reader) (MediaType, []byte, error)
+```
 
 ## MIT License
 

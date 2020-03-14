@@ -11,7 +11,7 @@ func TestGIF(t *testing.T) {
 		filePath  string
 		height    int
 		width     int
-		imageType ImageType
+		mediaType MediaType
 		err       error
 	}{
 		{"valid gif", "./test-images/test.gif", 186, 240, GIF, nil},
@@ -31,8 +31,8 @@ func TestGIF(t *testing.T) {
 				}
 				return
 			}
-			if info.ImageType != tt.imageType {
-				t.Errorf("ImageType got %q, want %q", info.ImageType, tt.imageType)
+			if info.MediaType != tt.mediaType {
+				t.Errorf("MediaType got %q, want %q", info.MediaType, tt.mediaType)
 			}
 			if info.Width != tt.width {
 				t.Errorf("Width got %d, want %d", info.Width, tt.width)

@@ -13,14 +13,14 @@ func TestParse(t *testing.T) {
 		filePath  string
 		height    int
 		width     int
-		imageType ImageType
+		mediaType MediaType
 		err       error
 	}{
 		{"valid png", "./test-images/test.png", 876, 1446, PNG, nil},
 		{"valid gif", "./test-images/test.gif", 186, 240, GIF, nil},
-		{"valid jpeg", "./test-images/test.jpg", 186, 240, GIF, ErrUnknownImageType},
-		{"invalid gif", "./test-images/test-fail-1-byte.gif", 186, 240, GIF, io.EOF},
-		{"invalid gif", "./test-images/test-fail-5-bytes.gif", 186, 240, GIF, ErrMissingGIFHeaders},
+		{"valid jpeg", "./test-images/test.jpg", 0, 0, "", ErrUnsupportedSize},
+		{"invalid gif", "./test-images/test-fail-1-byte.gif", 0, 0, "", ErrUnknownMediaType},
+		{"invalid gif", "./test-images/test-fail-5-bytes.gif", 0, 0, "", ErrUnknownMediaType},
 	}
 	for _, tt := range tests {
 		tt := tt
@@ -37,8 +37,8 @@ func TestParse(t *testing.T) {
 				}
 				return
 			}
-			if info.ImageType != tt.imageType {
-				t.Errorf("ImageType got %q, want %q", info.ImageType, tt.imageType)
+			if info.MediaType != tt.mediaType {
+				t.Errorf("MediaType got %q, want %q", info.MediaType, tt.mediaType)
 			}
 			if info.Width != tt.width {
 				t.Errorf("Width got %d, want %d", info.Width, tt.width)
@@ -57,7 +57,7 @@ func TestParseReaderErrors(t *testing.T) {
 		err    error
 	}{
 		{"first read error", bytes.NewReader([]byte("")), io.EOF},
-		{"second read error", bytes.NewReader([]byte("GIF")), io.EOF},
+		{"second read error", bytes.NewReader([]byte("GIF")), ErrUnknownMediaType},
 	}
 	for _, tt := range tests {
 		tt := tt

@@ -19,7 +19,7 @@ Example Usage:
 		log.Fatal(err)
 	}
 	fmt.Printf("%s", jsonBytes)
-	// {"Width":480,"Height":270,"ImageType":"GIF"}
+	// {"Width":480,"Height":270,"MediaType":"GIF"}
 
 MIT License Copyright (c) 2020 Montana Flynn (https://montanaflynn.com)
 */
