@@ -19,3 +19,9 @@ coverage:
 
 lint: format
 	golangci-lint run .
+
+docs:
+	godoc2md . | sed -e s#src/target/##g > DOCUMENTATION.md
+
+changelog:
+	git-chglog -o CHANGELOG.md

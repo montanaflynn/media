@@ -10,112 +10,42 @@ Currently it supports finding the dimensions of `png`, `gif` and `bmp` media by 
 
 - [Install](#install)
 - [Example Usage](#Example-Usage)
-- [Documentation](#documentation)
-  - [Errors](#errors)
-  - [type MediaType](#MediaType)
-  - [type Size](#Size)
-  - [func Parse(r io.Reader) (Size, error)](#Parse)
-  - [func DetectMediaType(r io.Reader) (MediaType, []byte, error)](#DetectMediaType)
 - [MIT License](#Mit-License)
 
 ## Install
 
 ```
-go get github.com/montanaflynn/media/size
+go get github.com/montanaflynn/media
 ```
 
 ## Example Usage
 
-From [cmd/media-size-http](cmd/media-size-http/main.go):
+From [cmd/media-info-http](cmd/media-info-http/main.go):
 
 ```go
 giphy := "https://media1.giphy.com/media/l0ErxFClZX9L3bgBi/giphy.gif"
-res, err := http.Get(giphy)
+r, err := http.Get(giphy)
 if err != nil {
-    log.Fatal(err)
+	log.Fatal(err)
 }
-defer res.Body.Close()
-size, err := size.Parse(res.Body)
+defer r.Body.Close()
+m, err := media.Parse(r.Body)
 if err != nil {
-    log.Fatal(err)
+	log.Fatal(err)
 }
-jsonBytes, err := json.Marshal(size)
+
+fmt.Printf("media dimensions: %v\n", m.Size())
+// media dimensions: {480 270}
+
+fmt.Printf("content type: %q\n", m.Type())
+// content type: "image/gif"
+
+j, err := json.Marshal(m)
 if err != nil {
-    log.Fatal(err)
+	log.Fatal(err)
 }
-fmt.Printf("%s", jsonBytes)
-// {"Width":480,"Height":270,"MediaType":"GIF"}
-```
-
-## Documentation
-
-### <a name="errors">Errors</a>
-
-```go
-var (
-	// ErrUnknownMediaType is when media is an unknown type
-	ErrUnknownMediaType = fmt.Errorf("Unknown media type")
-
-	// ErrUnsupportedSize is when media type doesn't implement size
-	ErrUnsupportedSize = fmt.Errorf("Unsupported size")
-
-	// ErrPNGMissingIHDR is when a png is missing the HDR header
-	ErrPNGMissingIHDR = fmt.Errorf("Invalid png missing IHDR")
-
-	// ErrBMPInvalidHeaderLength is when a bmp has invalid header length
-	ErrBMPInvalidHeaderLength = fmt.Errorf("Invalid bmp header length")
-)
-```
-
-### <a name="MediaType">type</a> [MediaType](/size/parse.go?s=468:489#L21)
-
-```go
-type MediaType string
-```
-
-MediaType is the type of the media
-
-```go
-const (
-	// PNG media type
-	PNG MediaType = "PNG"
-
-	// GIF media type
-	GIF = "GIF"
-
-	// BMP media type
-	BMP = "BMP"
-
-	// JPEG media type
-	JPEG = "JPEG"
-)
-```
-
-### <a name="Size">type</a> [Size](/size/parse.go?s=612:683#L32)
-
-```go
-type Size struct {
-    Width     int
-    Height    int
-    MediaType MediaType
-}
-
-```
-
-Size holds the media dimensions
-
-### <a name="Parse">func</a> [Parse](/size//parse.go?s=759:796#L39)
-
-```go
-// Parse returns the media information including file type and dimensions
-func Parse(r io.Reader) (Size, error)
-```
-
-### <a name="DetectMediaType">func</a> [DetectMediaType](/size/detect.go?s=695:755#L35)
-
-```go
-// DetectMediaType returns the MediaType from the first 32 bytes
-func DetectMediaType(r io.Reader) (MediaType, []byte, error)
+fmt.Printf("%s\n", j)
+// {"ContentType":"image/gif","Dimensions":{"Width":480,"Height":270}}
 ```
 
 ## MIT License

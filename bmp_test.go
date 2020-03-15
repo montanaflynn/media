@@ -1,4 +1,4 @@
-package size
+package media
 
 import (
 	"bytes"
@@ -13,10 +13,10 @@ func TestBMP(t *testing.T) {
 		filePath  string
 		height    int
 		width     int
-		mediaType MediaType
+		mediaType ContentType
 		err       error
 	}{
-		{"valid bmp", "./test-images/test.bmp", 512, 512, BMP, nil},
+		{"valid bmp", "./test-images/test.bmp", 512, 512, BMPType, nil},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -25,21 +25,23 @@ func TestBMP(t *testing.T) {
 				t.Error(err)
 				return
 			}
-			info, err := Parse(png)
+			m, err := Parse(png)
 			if err != nil {
 				if err != tt.err {
 					t.Errorf("Error got %q, want %q", err, tt.err)
 				}
 				return
 			}
-			if info.MediaType != tt.mediaType {
-				t.Errorf("MediaType got %q, want %q", info.MediaType, tt.mediaType)
+			mediaType := m.Type()
+			mediaSize := m.Size()
+			if mediaType != tt.mediaType {
+				t.Errorf("ContentType got %q, want %q", mediaType, tt.mediaType)
 			}
-			if info.Width != tt.width {
-				t.Errorf("Width got %d, want %d", info.Width, tt.width)
+			if mediaSize.Width != tt.width {
+				t.Errorf("Width got %d, want %d", mediaSize.Width, tt.width)
 			}
-			if info.Height != tt.height {
-				t.Errorf("Height got %d, want %d", info.Height, tt.height)
+			if mediaSize.Height != tt.height {
+				t.Errorf("Height got %d, want %d", mediaSize.Height, tt.height)
 			}
 		})
 	}

@@ -1,4 +1,4 @@
-package size
+package media
 
 import (
 	"bytes"
@@ -17,26 +17,26 @@ func TestDetectContentType(t *testing.T) {
 	var tests = []struct {
 		name      string
 		data      []byte
-		mediaType MediaType
+		mediaType ContentType
 		err       error
 	}{
 		// Some nonsense.
 		{"Empty", []byte{}, "", io.EOF},
-		{"Binary", []byte{1, 2, 3}, "", ErrUnknownMediaType},
-		{"Long", make1KiloBytes(), "", ErrUnknownMediaType},
-		{"Whitespace Prefix", []byte("    \twhitespace"), "", ErrUnknownMediaType},
+		{"Binary", []byte{1, 2, 3}, "", ErrUnknownContentType},
+		{"Long", make1KiloBytes(), "", ErrUnknownContentType},
+		{"Whitespace Prefix", []byte("    \twhitespace"), "", ErrUnknownContentType},
 
 		// Image types.
-		{"BMP image", []byte("BM..."), BMP, nil},
-		{"GIF 87a", []byte(`GIF87a`), GIF, nil},
-		{"GIF 89a", []byte(`GIF89a...`), GIF, nil},
-		{"PNG image", []byte("\x89PNG\x0D\x0A\x1A\x0A"), PNG, nil},
-		{"JPEG image", []byte("\xFF\xD8\xFF"), JPEG, nil},
+		{"BMP image", []byte("BM..."), BMPType, nil},
+		{"GIF 87a", []byte(`GIF87a`), GIFType, nil},
+		{"GIF 89a", []byte(`GIF89a...`), GIFType, nil},
+		{"PNG image", []byte("\x89PNG\x0D\x0A\x1A\x0A"), PNGType, nil},
+		{"JPEG image", []byte("\xFF\xD8\xFF"), JPEGType, nil},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			mt, _, err := DetectMediaType(bytes.NewReader(tt.data))
+			mt, _, err := DetectContentType(bytes.NewReader(tt.data))
 			if err != tt.err {
 				t.Errorf("%v: DetectContentType = %q, want %q", tt.name, err, tt.err)
 			}
