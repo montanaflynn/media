@@ -1,6 +1,2 @@
-github.com/montanaflynn/media v0.0.2 h1:3sRZHWbS6eGa9UbyZcrKAdV3ZYbbcE3pOV1Hzf9lHOA=
-github.com/montanaflynn/media v0.0.2/go.mod h1:Gf8XNYWtkBgEtMwyGelddMnjo3ixi5CA1dbfobm5v5I=
-github.com/montanaflynn/media/size v0.0.2 h1:sVYu5mnUUTcvR2UVEd1IF8rk7zeCv6uGXeG5eoTqVT0=
-github.com/montanaflynn/media/size v0.0.2/go.mod h1:4/6NI7Th8ba4upvB0rftZfuK5THvBpqEJ2enQpBFQrY=
-github.com/montanaflynn/media/size v0.0.3 h1:tlwESoJVOV86ZO9CRxLc8Q+G0AeGZSs6ao8HbDj0c5I=
-github.com/montanaflynn/media/size v0.0.3/go.mod h1:4/6NI7Th8ba4upvB0rftZfuK5THvBpqEJ2enQpBFQrY=
+github.com/montanaflynn/media v0.0.3 h1:C44GsxyVPj0ymC+4jX2UxosMfHL6G4c2KhPV5j9sAKQ=
+github.com/montanaflynn/media v0.0.3/go.mod h1:Gf8XNYWtkBgEtMwyGelddMnjo3ixi5CA1dbfobm5v5I=
