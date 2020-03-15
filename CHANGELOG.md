@@ -1,4 +1,25 @@
 
+<a name="v0.0.3"></a>
+## [v0.0.3](https://github.com/montanaflynn/media/compare/size/v0.0.5...v0.0.3) (2020-03-15)
+
+### Add
+
+* Add go.mod file for module support
+
+### Move
+
+* Move size sub-package into top level media package
+
+### Remove
+
+* Remove size sub-package from travis and badges
+
+### Update
+
+* Update README to include new errors in documentation section [skip travis]
+* Update README to include support for finding bmp dimensions [skip travis]
+
+
 <a name="size/v0.0.5"></a>
 ## [size/v0.0.5](https://github.com/montanaflynn/media/compare/size/v0.0.4...size/v0.0.5) (2020-03-14)
 
