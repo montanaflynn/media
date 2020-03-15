@@ -21,7 +21,7 @@ lint: format
 	golangci-lint run .
 
 docs:
-	godoc2md . | sed -e s#src/target/##g > DOCUMENTATION.md
+	godoc2md github.com/montanaflynn/media | sed -e s#src/target/##g > DOC.md
 
 changelog:
 	git-chglog -o CHANGELOG.md
